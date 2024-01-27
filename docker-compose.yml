@@ -45,7 +45,7 @@ services:
     working_dir: /app
     volumes:
         - ./front:/app
-    entrypoint: [ 'npm' ]
+    entrypoint: /bin/sh
     ports:
         - '8000:8000'
     tty: true
