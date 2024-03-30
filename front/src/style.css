@@ -97,3 +97,11 @@ button:focus-visible {
         background-color: #f9f9f9;
     }
 }
+
+.v-table {
+    width: 100% !important;
+}
+
+.dialog .v-sheet {
+    padding: 20px;
+}

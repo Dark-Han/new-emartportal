@@ -12,4 +12,8 @@ class ToolsTypes extends Model
     protected $table = 'tools_types';
 
     protected $guarded = [];
+
+    protected $casts = [
+        'created_at' => 'datetime:d-m-Y H:i:s'
+    ];
 }
