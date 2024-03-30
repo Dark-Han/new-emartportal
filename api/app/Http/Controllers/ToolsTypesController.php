@@ -11,7 +11,7 @@ class ToolsTypesController extends Controller
     public function index(Request $request)
     {
         $toolTypesQuery = ToolsTypes::orderBy('id', 'desc');
-        if ($request->itemsPerPage == -1) {
+        if (!$request->exists('itemsPerPage') || $request->itemsPerPage == -1) {
             return ['data' => $toolTypesQuery->get()];
         }
         return $toolTypesQuery->paginate($request->itemsPerPage);
