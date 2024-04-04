@@ -10,9 +10,8 @@ return new class extends Migration {
     {
         Schema::create('shifts', function (Blueprint $table) {
             $table->id();
-            $table->dateTime('openingDate');
-            $table->dateTime('closingDate');
-            $table->integer('shop_id');
+            $table->timestamp('openingDate');
+            $table->timestamp('closingDate');
             $table->foreignIdFor(Shop::class);
             $table->softDeletes();
         });
