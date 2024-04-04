@@ -22,6 +22,9 @@ const vuetify = createVuetify({
     icons: {
         defaultSet: 'mdi',
     },
+    theme: {
+        defaultTheme: 'dark'
+    }
 })
 
 axios.defaults.baseURL = 'http://localhost:8080';
