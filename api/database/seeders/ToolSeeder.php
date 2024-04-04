@@ -2,13 +2,13 @@
 
 namespace Database\Seeders;
 
-use App\Models\Tools;
+use App\Models\Tool;
 use Illuminate\Database\Seeder;
 
-class ToolsSeeder extends Seeder
+class ToolSeeder extends Seeder
 {
     public function run(): void
     {
-        Tools::factory(10)->create();
+        Tool::factory(10)->create();
     }
 }
