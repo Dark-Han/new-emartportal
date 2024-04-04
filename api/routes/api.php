@@ -16,4 +16,9 @@ use Illuminate\Support\Facades\Route;
 Route::middleware(['auth:sanctum'])->prefix('v1')->group(function () {
     Route::resource('tools-types', \App\Http\Controllers\ToolsTypesController::class);
     Route::resource('tools', \App\Http\Controllers\ToolsController::class);
+    Route::get('registrations', [\App\Http\Controllers\RegistrationsController::class, 'index']);
+    Route::get(
+        'registrations/{id}/actions',
+        [\App\Http\Controllers\RegistrationsController::class, 'getRegistrationActions']
+    );
 });
