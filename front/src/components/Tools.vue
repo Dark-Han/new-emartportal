@@ -137,7 +137,7 @@ async function addRow() {
   let response = await axios.post('/api/v1/tools', form)
   closeDialog()
   data.value.unshift(response.data)
-  data.value.pop()
+  // data.value.pop()
   Object.assign(form, freshForm)
 }
 

@@ -15,14 +15,14 @@
 
         <form>
           <v-text-field
-              v-model="toolType.name"
+              v-model="form.name"
               label="Название"
               variant="underlined"
           ></v-text-field>
 
           <v-btn
               class="me-4"
-              @click="addToolType"
+              @click="addRow"
               color="success"
           >
             Добавить
@@ -41,11 +41,11 @@
     <v-data-table-server
         v-model:items-per-page="table.defaultItemsPerPage"
         :headers="table.headers"
-        :items="toolsTypes"
+        :items="data"
         :items-length="table.totalCount"
         :loading="table.loading"
         :search="table.search"
-        @update:options="loadToolsTypes"
+        @update:options="loadData"
     >
       <template v-slot:tfoot>
         <tr>
@@ -96,30 +96,30 @@ let table = reactive({
 
 let dialog = ref(false)
 
-let toolsTypes = ref()
+let data = ref()
 
-let toolType = reactive({
+let form = reactive({
   name: ''
 })
 
-let clearToolType = {
+let freshForm = {
   name: ''
 }
 
 
-async function loadToolsTypes({page, itemsPerPage, sortBy}) {
+async function loadData({page, itemsPerPage, sortBy}) {
   let query = 'page=' + page + '&itemsPerPage=' + itemsPerPage + '&search=' + table.search + '&sortBy=' + sortBy
   let response = await axios.get('/api/v1/tools-types?' + query)
-  toolsTypes.value = response.data.data
+  data.value = response.data.data
   table.totalCount = response.data.total
   table.loading = false
 }
 
-async function addToolType() {
-  let response = await axios.post('/api/v1/tools-types', toolType)
+async function addRow() {
+  let response = await axios.post('/api/v1/tools-types', form)
   dialog.value = false
-  toolsTypes.value.unshift(response.data)
-  Object.assign(toolType, clearToolType)
+  data.value.unshift(response.data)
+  Object.assign(form, freshForm)
 }
 
 </script>
