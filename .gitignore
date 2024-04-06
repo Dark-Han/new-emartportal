@@ -15,5 +15,5 @@ auth.json
 npm-debug.log
 yarn-error.log
 /api/.idea
-/front/.idea
-/api/docker/mysql
+front/.idea
+api/docker/mysql/data
