@@ -1,21 +1,1 @@
-<?php
-
-use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\Schema;
-
-return new class extends Migration {
-    public function up(): void
-    {
-        Schema::create('tools_types', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->timestamps();
-        });
-    }
-
-    public function down(): void
-    {
-        Schema::dropIfExists('tools_types');
-    }
-};
+<?phpuse Illuminate\Database\Migrations\Migration;use Illuminate\Database\Schema\Blueprint;use Illuminate\Support\Facades\Schema;return new class extends Migration {    public function up(): void    {        Schema::create('tools_types', function (Blueprint $table) {            $table->bigInteger('id');            $table->string('name');            $table->timestamps();        });        $toolTypes = \Illuminate\Support\Facades\DB::connection('oldDatabase')->table('tools_types')->get();        foreach ($toolTypes as $toolType) {            \App\Models\ToolsTypes::create([                'id' => $toolType->id,                'name' => $toolType->name,            ]);        }    }    public function down(): void    {        Schema::dropIfExists('tools_types');    }};

@@ -7,18 +7,17 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration {
     public function up(): void
     {
-        Schema::create('transactions', function (Blueprint $table) {
+        Schema::create('transaction_documents', function (Blueprint $table) {
             $table->id();
-            $table->integer('registration_id');
-            $table->string('type');
-            $table->string('paid');
-            $table->softDeletes();
+            $table->bigInteger('transaction_id');
+            $table->bigInteger('transaction_document_type_id');
+            $table->string('path');
             $table->timestamps();
         });
     }
 
     public function down(): void
     {
-        Schema::dropIfExists('actions');
+        Schema::dropIfExists('transaction_documents');
     }
 };

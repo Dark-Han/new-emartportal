@@ -9,33 +9,30 @@ return new class extends Migration {
     {
         Schema::create('registrations', function (Blueprint $table) {
             $table->bigInteger('id');
-            $table->integer('id_smena')->nullable();
-            $table->boolean('cher_spis')->nullable();
-            $table->string('fio')->nullable();
+            $table->bigInteger('shift_id')->nullable();
+            $table->bigInteger('status_id')->nullable();
+            $table->string('full_name')->nullable();
             $table->string('iin')->nullable();
-            $table->string('nom_udas')->nullable();
-            $table->string('vydano')->nullable();
+            $table->string('document_number')->nullable();
+            $table->string('document_given_by')->nullable();
             $table->string('address')->nullable();
             $table->string('phone')->nullable();
-            $table->string('extra_information')->nullable();
-            $table->string('akt_prim')->nullable();
-            $table->string('dog_aren')->nullable();
-            $table->string('delivery_type')->nullable();
-            $table->string('date_st')->nullable();
-            $table->string('date_en')->nullable();
-            $table->string('date_sd')->nullable();
-            $table->string('delivery_man')->nullable();
-            $table->string('id_shop')->nullable();
-            $table->string('user_id_role')->nullable();
-            $table->string('payment_type_id')->nullable();
-            $table->string('consultant_id')->nullable();
-            $table->string('client_type_id')->nullable();
-            $table->string('one_day_payment')->nullable();
-            $table->string('remove')->nullable();
-            $table->string('removed')->nullable();
-            $table->string('shtraf')->nullable();
-            $table->string('delivery_payment')->nullable();
-            $table->string('status')->nullable();
+            $table->timestamp('rent_start_date')->nullable();
+            $table->timestamp('rent_end_date')->nullable();
+            $table->timestamp('rent_return_date')->nullable();
+            $table->integer('one_day_rent_amount')->nullable();
+            $table->integer('fine_amount')->nullable();
+            $table->integer('duty_amount')->nullable();
+            $table->bigInteger('shop_id')->nullable();
+            $table->bigInteger('employee_id')->nullable();
+            $table->bigInteger('consultant_id')->nullable();
+            $table->bigInteger('client_type_id')->nullable();
+            $table->bigInteger('payment_type_id')->nullable();
+            $table->boolean('for_delete')->default(false);
+            $table->bigInteger('delivery_type_id')->nullable();
+            $table->bigInteger('delivery_man_id')->nullable();
+            $table->integer('delivery_amount')->nullable();
+
             $table->softDeletes();
         });
     }

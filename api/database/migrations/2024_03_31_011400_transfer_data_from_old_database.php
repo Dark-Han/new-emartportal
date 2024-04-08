@@ -5,6 +5,7 @@ use Illuminate\Database\Migrations\Migration;
 return new class extends Migration {
     public function up(): void
     {
+        return;
         DB::connection('oldDatabase')
             ->table('regist')
             ->join('kassa', 'regist.id', '=', 'kassa.id_reg')
@@ -13,9 +14,11 @@ return new class extends Migration {
             ->chunk(5000, function (\Illuminate\Support\Collection $registrations) {
                 $newRegistrations = [];
                 $newActions = [];
+                $newDocuments = [];
                 foreach ($registrations as $registration) {
                     if (empty($registration->dop_info)) {
                         $newRegistrations[] = $this->generateNewRegistration($registration);
+                        $newDocuments[] = $this->generateNewDocuments($registration);
                         $registration->type = 'opening';
                         $newActions[] = $this->generateNewAction($registration);
                     } else {
@@ -40,6 +43,7 @@ return new class extends Migration {
                 }
                 \App\Models\Registration::insert($newRegistrations);
                 \App\Models\Action::insert($newActions);
+                \App\Models\TransactionDocument::insert($newDocuments);
             });
     }
 
@@ -47,30 +51,30 @@ return new class extends Migration {
     {
         return [
             'id' => $registration->id_reg,
-            'id_smena' => $registration->id_smena,
-            'cher_spis' => $registration->cher_spis,
-            'fio' => $registration->fio,
+            'shift_id' => $registration->id_smena,
+            'status_id' => $registration->status,
+            'full_name' => $registration->fio,
             'iin' => $registration->iin,
-            'nom_udas' => $registration->nom_udas,
-            'vydano' => $registration->vydano,
+            'document_number' => $registration->nom_udas,
+            'document_given_by' => $registration->vydano,
             'address' => $registration->adres,
             'phone' => $registration->telefon,
-            'extra_information' => $registration->dop_info,
-            'akt_prim' => $registration->akt_prim,
-            'dog_aren' => $registration->dog_aren,
-            'delivery_type' => $registration->delivery_type,
-            'date_st' => $registration->date_st,
-            'date_en' => $registration->date_en,
-            'date_sd' => $registration->date_sd,
-            'delivery_man' => $registration->delivery_man,
-            'id_shop' => $registration->id_shop,
-            'user_id_role' => $registration->user_id_role,
-            'payment_type_id' => $registration->payment_type_id,
+            'rent_start_date' => $registration->date_st,
+            'rent_end_date' => $registration->date_en,
+            'rent_return_date' => $registration->date_sd,
+            'one_day_rent_amount' => $registration->one_day,
+            'fine_amount' => $registration->shtraf,
+            'duty_amount' => $registration->duty,
+            'shop_id' => $registration->id_shop,
+            'employee_id' => $registration->user_id_role,
             'consultant_id' => $registration->consultant_id,
-            'one_day_payment' => $registration->one_day,
-            'shtraf' => $registration->shtraf,
-            'delivery_payment' => $registration->delivery,
-            'status' => $registration->status,
+            'client_type_id' => $registration->client_type_id,
+            'payment_type_id' => $registration->payment_type_id,
+            'for_delete' => $registration->for_delete,
+            'delivery_type_id' => $registration->delivery_type,
+            'delivery_man_id' => $registration->delivery_man,
+            'delivery_amount' => $registration->delivery,
+
         ];
     }
 
@@ -82,6 +86,17 @@ return new class extends Migration {
             'type' => $registration->type,
             'registration_id' => $registration->id_reg
         ];
+    }
+
+    private function generateNewDocuments($registration): array
+    {
+        return [[
+            'document_type_id' => 1,
+            'path' => $registration->akt_prim
+        ], [
+            'document_type_id' => 2,
+            'path' => $registration->dog_aren
+        ]];
     }
 
     public function down(): void
