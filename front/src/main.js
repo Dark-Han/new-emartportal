@@ -15,7 +15,6 @@ import Registrations from "./components/Registrations.vue";
 import Tools from "./components/Tools.vue";
 import ToolsTypes from "./components/ToolsTypes.vue";
 
-
 const vuetify = createVuetify({
     components,
     directives,
@@ -26,10 +25,6 @@ const vuetify = createVuetify({
         defaultTheme: 'dark'
     }
 })
-
-axios.defaults.baseURL = 'http://localhost:8080';
-axios.defaults.withCredentials = true;
-axios.defaults.withXSRFToken = true;
 
 const routes = [
     {path: '/auth/login', component: Login},
@@ -54,6 +49,18 @@ const routes = [
 ]
 
 const router = createRouter({history: createWebHistory(), routes})
+
+axios.defaults.baseURL = 'http://localhost:8080';
+axios.defaults.withCredentials = true;
+axios.defaults.withXSRFToken = true;
+axios.interceptors.response.use((response) => {
+    return response
+}, async (error) => {
+    if (error.response.status === 401) {
+        await router.push('/auth/login')
+    }
+    return Promise.reject(error)
+})
 
 createApp(App)
     .use(vuetify)

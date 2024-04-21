@@ -53,9 +53,9 @@ let form = ref({
 })
 
 async function login() {
-  await axios.get('http://localhost:8080/sanctum/csrf-cookie')
-  await axios.post('http://localhost:8080/login', form.value)
-  router.push('/')
+  await axios.get('sanctum/csrf-cookie')
+  await axios.post('login', form.value)
+  await router.push('/')
 }
 
 </script>
