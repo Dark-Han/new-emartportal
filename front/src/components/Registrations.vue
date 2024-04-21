@@ -106,7 +106,7 @@
                     v-for="(tool,index) in form.tools"
                     v-model="tool.id"
                     item-value="id"
-                    item-title="name"
+                    item-title="tool_type.name"
                     :items="tools"
                     label="Инструмент"
                     variant="underlined"
