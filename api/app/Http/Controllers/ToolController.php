@@ -12,10 +12,10 @@ class ToolController extends Controller
     public function index(Request $request)
     {
         $toolTypesQuery = Tool::with(['toolType'])->orderBy('id', 'desc');
-        if ($request->itemsPerPage == -1) {
-            return ['data' => $toolTypesQuery->get()];
+        if ($request->has('itemsPerPage') && $request->itemsPerPage != -1) {
+            return $toolTypesQuery->paginate($request->itemsPerPage);
         }
-        return $toolTypesQuery->paginate($request->itemsPerPage);
+        return ['data' => $toolTypesQuery->get()];
     }
 
     public function store(ToolRequest $request)
