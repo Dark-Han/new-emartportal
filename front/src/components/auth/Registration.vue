@@ -51,11 +51,6 @@
               <v-icon icon="mdi-chevron-right" end></v-icon>
             </v-btn>
 
-            <v-btn color="success" @click="test">
-              testing
-              <v-icon icon="mdi-chevron-right" end></v-icon>
-            </v-btn>
-
           </v-card-actions>
         </v-card>
       </v-col>
@@ -68,24 +63,18 @@
 import {ref} from "vue";
 import axios from "axios";
 
-let form=ref({
-  name:'',
-  email:'',
-  password:'',
-  password_confirmation:''
+let form = ref({
+  name: '',
+  email: '',
+  password: '',
+  password_confirmation: ''
 })
 
-async function register(){
+async function register() {
   axios.defaults.withCredentials = true;
   axios.defaults.withXSRFToken = true;
-  await axios.get('http://localhost:8080/sanctum/csrf-cookie')
-  await axios.post('http://localhost:8080/register',form.value)
-}
-
-async function test(){
-  axios.defaults.withCredentials = true;
-  axios.defaults.withXSRFToken = true;
-  await axios.post('http://localhost:8080/api/user123',{test:'data'})
+  await axios.get('sanctum/csrf-cookie')
+  await axios.post('register', form.value)
 }
 
 </script>
