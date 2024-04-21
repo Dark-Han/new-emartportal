@@ -13,14 +13,6 @@ return new class extends Migration {
             $table->softDeletes();
             $table->timestamps();
         });
-
-        $shops = \Illuminate\Support\Facades\DB::connection('oldDatabase')
-            ->table('shops')
-            ->get();
-
-        foreach ($shops as $shop) {
-            \App\Models\Shop::create(['id' => $shop->id, 'address' => $shop->address]);
-        }
     }
 
     public function down(): void
