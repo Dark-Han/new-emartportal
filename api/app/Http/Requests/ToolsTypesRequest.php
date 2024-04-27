@@ -17,4 +17,11 @@ class ToolsTypesRequest extends FormRequest
     {
         return true;
     }
+
+    public function messages(): array
+    {
+        return [
+            'name.required' => 'Название не заполнено!'
+        ];
+    }
 }

@@ -13,11 +13,12 @@
     >
       <v-sheet class="mx-auto" width="500">
 
-        <form>
+        <form @submit.prevent>
           <v-text-field
               v-model="form.name"
               label="Название"
               variant="underlined"
+              :error-messages="validationErrors.name"
           ></v-text-field>
 
           <v-btn
@@ -30,7 +31,7 @@
           <v-btn
               color="error"
               class="me-4"
-              @click="dialog=false">
+              @click="hideCancelWindow()">
             Отмена
           </v-btn>
         </form>
@@ -74,6 +75,8 @@
 import {reactive, ref} from "vue";
 import axios from "axios";
 
+let validationErrors = ref({})
+
 let table = reactive({
   defaultItemsPerPage: 5,
   totalCount: 0,
@@ -116,10 +119,23 @@ async function loadData({page, itemsPerPage, sortBy}) {
 }
 
 async function addRow() {
-  let response = await axios.post('/api/v1/tools-types', form)
+  validationErrors.value = {}
+  try {
+    let response = await axios.post('/api/v1/tools-types', form)
+    dialog.value = false
+    data.value.unshift(response.data)
+    Object.assign(form, freshForm)
+  } catch (error) {
+    if (error.response.status === 422) {
+      validationErrors.value = error.response.data.errors
+    }
+  }
+
+}
+
+function hideCancelWindow() {
   dialog.value = false
-  data.value.unshift(response.data)
-  Object.assign(form, freshForm)
+  validationErrors.value = {}
 }
 
 </script>
