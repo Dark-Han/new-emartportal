@@ -18,4 +18,12 @@ class ToolRequest extends FormRequest
     {
         return true;
     }
+
+    public function messages(): array
+    {
+        return [
+            'tool_type_id.required' => 'Инструмент не выбран!',
+            'serial_number.required' => 'Серийный номер не задан!'
+        ];
+    }
 }

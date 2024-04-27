@@ -21,12 +21,14 @@
               :items="toolTypes"
               label="Инструмент"
               variant="underlined"
+              :error-messages="validationErrors.tool_type_id"
           ></v-autocomplete>
 
           <v-text-field
               v-model="form.serial_number"
               label="Серийный номер"
               variant="underlined"
+              :error-messages="validationErrors.serial_number"
           ></v-text-field>
 
           <v-btn
@@ -83,6 +85,8 @@
 import {onMounted, reactive, ref} from "vue";
 import axios from "axios";
 
+let validationErrors = ref({})
+
 let table = reactive({
   defaultItemsPerPage: 5,
   totalCount: 0,
@@ -134,11 +138,17 @@ async function loadData({page, itemsPerPage, sortBy}) {
 }
 
 async function addRow() {
-  let response = await axios.post('/api/v1/tools', form)
-  closeDialog()
-  data.value.unshift(response.data)
-  // data.value.pop()
-  Object.assign(form, freshForm)
+  validationErrors.value = {}
+  try {
+    let response = await axios.post('/api/v1/tools', form)
+    data.value.unshift(response.data)
+    closeDialog()
+  } catch (error) {
+    if (error.response.status === 422) {
+      validationErrors.value = error.response.data.errors
+    }
+  }
+
 }
 
 async function loadToolTypes() {
@@ -149,5 +159,6 @@ async function loadToolTypes() {
 function closeDialog() {
   dialog.value = false
   Object.assign(form, freshForm)
+  validationErrors.value = {}
 }
 </script>
