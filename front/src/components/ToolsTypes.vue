@@ -86,12 +86,7 @@ let table = reactive({
     name: ''
   },
   headers: [
-    {
-      title: 'ID',
-      align: 'start',
-      sortable: false,
-      key: 'id',
-    },
+    {title: 'ID', align: 'start', sortable: false, key: 'id'},
     {title: 'Название', key: 'name', align: 'start'},
     {title: 'Создано', key: 'created_at', align: 'start'},
   ]

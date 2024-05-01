@@ -96,15 +96,10 @@ let table = reactive({
     name: ''
   },
   headers: [
-    {
-      title: 'ID',
-      align: 'start',
-      sortable: false,
-      key: 'id',
-    },
-    {title: 'Инструмент', key: 'tool_type.name', align: 'start'},
-    {title: 'Серийный номер', key: 'serial_number', align: 'start'},
-    {title: 'Создано', key: 'created_at', align: 'start'},
+    {title: 'ID', align: 'center', sortable: false, key: 'id'},
+    {title: 'Инструмент', key: 'tool_type.name', align: 'center'},
+    {title: 'Серийный номер', key: 'serial_number', align: 'center'},
+    {title: 'Создано', key: 'created_at', align: 'center'},
   ]
 })
 
