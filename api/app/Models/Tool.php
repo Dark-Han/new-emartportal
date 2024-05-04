@@ -18,6 +18,6 @@ class Tool extends Model
 
     public function toolType(): BelongsTo
     {
-        return $this->belongsTo(ToolsTypes::class);
+        return $this->belongsTo(ToolTypes::class);
     }
 }

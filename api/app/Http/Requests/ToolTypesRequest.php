@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class ToolsTypesRequest extends FormRequest
+class ToolTypesRequest extends FormRequest
 {
     public function rules(): array
     {

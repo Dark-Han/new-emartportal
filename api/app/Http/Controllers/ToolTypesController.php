@@ -2,34 +2,34 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\ToolsTypesRequest;
-use App\Models\ToolsTypes;
+use App\Http\Requests\ToolTypesRequest;
+use App\Models\ToolTypes;
 use Illuminate\Http\Request;
 
-class ToolsTypesController extends Controller
+class ToolTypesController extends Controller
 {
     public function index(Request $request)
     {
-        $toolTypesQuery = ToolsTypes::orderBy('id', 'desc');
+        $toolTypesQuery = ToolTypes::orderBy('id', 'desc');
         if (!$request->exists('itemsPerPage') || $request->itemsPerPage == -1) {
             return ['data' => $toolTypesQuery->get()];
         }
         return $toolTypesQuery->paginate($request->itemsPerPage);
     }
 
-    public function store(ToolsTypesRequest $request)
+    public function store(ToolTypesRequest $request)
     {
-        return ToolsTypes::create($request->validated());
+        return ToolTypes::create($request->validated());
     }
 
-    public function update(ToolsTypesRequest $request, ToolsTypes $toolsTypes)
+    public function update(ToolTypesRequest $request, ToolTypes $toolsTypes)
     {
         $toolsTypes->update($request->validated());
 
         return $toolsTypes;
     }
 
-    public function destroy(ToolsTypes $toolsTypes)
+    public function destroy(ToolTypes $toolsTypes)
     {
         $toolsTypes->delete();
 

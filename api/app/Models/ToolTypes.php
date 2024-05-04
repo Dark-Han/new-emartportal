@@ -5,11 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class ToolsTypes extends Model
+class ToolTypes extends Model
 {
     use HasFactory;
 
-    protected $table = 'tools_types';
+    protected $table = 'tool_types';
 
     protected $guarded = [];
 

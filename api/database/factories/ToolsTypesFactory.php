@@ -2,13 +2,13 @@
 
 namespace Database\Factories;
 
-use App\Models\ToolsTypes;
+use App\Models\ToolTypes;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Carbon;
 
 class ToolsTypesFactory extends Factory
 {
-    protected $model = ToolsTypes::class;
+    protected $model = ToolTypes::class;
 
     public function definition(): array
     {
