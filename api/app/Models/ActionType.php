@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class TransactionType extends Model
+class ActionType extends Model
 {
     protected $guarded = [];
 }
