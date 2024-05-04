@@ -43,7 +43,7 @@ return new class extends Migration {
                 }
                 \App\Models\Registration::insert($newRegistrations);
                 \App\Models\Action::insert($newActions);
-                \App\Models\TransactionDocument::insert($newDocuments);
+                \App\Models\ActionDocument::insert($newDocuments);
             });
     }
 
@@ -83,20 +83,25 @@ return new class extends Migration {
         return [
             'paid' => $registration->opl,
             'duty' => $registration->dolg,
-            'type' => $registration->type,
+            'action_type_id' => $registration->type,
             'registration_id' => $registration->id_reg
         ];
     }
 
     private function generateNewDocuments($registration): array
     {
-        return [[
-            'document_type_id' => 1,
-            'path' => $registration->akt_prim
-        ], [
-            'document_type_id' => 2,
-            'path' => $registration->dog_aren
-        ]];
+        return [
+            [
+                'document_type_id' => 1,
+                'path' => $registration->akt_prim,
+                'action_id' => 1
+            ],
+            [
+                'document_type_id' => 2,
+                'path' => $registration->dog_aren,
+                'action_id' => 1
+            ]
+        ];
     }
 
     public function down(): void
