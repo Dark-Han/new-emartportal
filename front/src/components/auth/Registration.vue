@@ -16,6 +16,7 @@
                 color="primary"
                 label="ФИО"
                 variant="underlined"
+                :error-messages="validationErrors.name"
             ></v-text-field>
 
             <v-text-field
@@ -23,6 +24,7 @@
                 color="primary"
                 label="Email"
                 variant="underlined"
+                :error-messages="validationErrors.email"
             ></v-text-field>
 
             <v-text-field
@@ -30,6 +32,7 @@
                 color="primary"
                 label="Пароль"
                 variant="underlined"
+                :error-messages="validationErrors.password"
             ></v-text-field>
 
             <v-text-field
@@ -37,6 +40,7 @@
                 color="primary"
                 label="Повторите пароль"
                 variant="underlined"
+                :error-messages="validationErrors.password_confirmation"
             ></v-text-field>
 
           </v-container>
@@ -63,6 +67,8 @@
 import {ref} from "vue";
 import axios from "axios";
 
+let validationErrors = ref({})
+
 let form = ref({
   name: '',
   email: '',
@@ -71,10 +77,15 @@ let form = ref({
 })
 
 async function register() {
-  axios.defaults.withCredentials = true;
-  axios.defaults.withXSRFToken = true;
-  await axios.get('sanctum/csrf-cookie')
-  await axios.post('register', form.value)
+  validationErrors.value = {}
+  try {
+    await axios.get('sanctum/csrf-cookie')
+    await axios.post('register', form.value)
+  } catch (error) {
+    if (error.response.status === 422) {
+      validationErrors.value = error.response.data.errors
+    }
+  }
 }
 
 </script>
