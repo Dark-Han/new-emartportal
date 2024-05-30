@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class TransactionDocument extends Model
+class ActionDocumentType extends Model
 {
+    protected $guarded = [];
 }
