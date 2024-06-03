@@ -18,6 +18,7 @@ class ToolFactory extends Factory
             'updated_at' => Carbon::now(),
             'tool_type_id' => ToolTypes::factory(),
             'serial_number' => $this->faker->word(),
+            'status_id' => 1
         ];
     }
 }
