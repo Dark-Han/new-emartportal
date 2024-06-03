@@ -17,6 +17,7 @@ Route::middleware(['auth:sanctum'])->prefix('v1')->group(function () {
     Route::resource('tools-types', \App\Http\Controllers\ToolTypesController::class);
     Route::resource('tools', \App\Http\Controllers\ToolController::class);
     Route::get('registrations', [\App\Http\Controllers\RegistrationsController::class, 'index']);
+    Route::post('registrations', [\App\Http\Controllers\RegistrationsController::class, 'create']);
     Route::get(
         'registrations/{id}/actions',
         [\App\Http\Controllers\RegistrationsController::class, 'getRegistrationActions']
