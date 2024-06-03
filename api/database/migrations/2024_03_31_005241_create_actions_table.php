@@ -10,8 +10,11 @@ return new class extends Migration {
         Schema::create('actions', function (Blueprint $table) {
             $table->id();
             $table->integer('registration_id');
-            $table->string('type');
+            $table->integer('action_type_id');
             $table->string('paid');
+            $table->string('duty');
+            $table->string('act_of_acceptance_of_transfer_document');
+            $table->string('lease_contract_document');
             $table->softDeletes();
             $table->timestamps();
         });

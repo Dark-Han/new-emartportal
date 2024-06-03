@@ -8,7 +8,7 @@ return new class extends Migration {
     public function up(): void
     {
         Schema::create('registrations', function (Blueprint $table) {
-            $table->bigInteger('id');
+            $table->id();
             $table->bigInteger('shift_id')->nullable();
             $table->bigInteger('status_id')->nullable();
             $table->string('full_name')->nullable();
@@ -21,8 +21,9 @@ return new class extends Migration {
             $table->timestamp('rent_end_date')->nullable();
             $table->timestamp('rent_return_date')->nullable();
             $table->integer('one_day_rent_amount')->nullable();
-            $table->integer('fine_amount')->nullable();
-            $table->integer('duty_amount')->nullable();
+            $table->integer('paid')->nullable();
+            $table->integer('fine')->nullable();
+            $table->integer('duty')->nullable();
             $table->bigInteger('shop_id')->nullable();
             $table->bigInteger('employee_id')->nullable();
             $table->bigInteger('consultant_id')->nullable();

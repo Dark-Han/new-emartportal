@@ -13,12 +13,13 @@ return new class extends Migration {
             $table->integer('selling_price');
             $table->integer('rental_price');
             $table->integer('discount_price');
+            $table->softDeletes();
             $table->timestamps();
         });
     }
 
     public function down(): void
     {
-        Schema::dropIfExists('tools_types');
+        Schema::dropIfExists('tool_types');
     }
 };
