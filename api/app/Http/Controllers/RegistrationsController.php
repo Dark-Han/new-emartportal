@@ -57,9 +57,8 @@ class RegistrationsController extends Controller
             }
 
             $registration = $this->createRegistration($data);
-            $this->createAction($registration->id, $data);
-
-            Tool::whereIn('id', $data['rent_tools_ids'])->update(['status_id' => self::TOOL_IN_RENT]);
+            $this->createActionForRegistration($registration->id, $data);
+            $this->giveToolsFromWarehouseToRent($data['rent_tools_ids']);
 
             return $registration;
         });
@@ -81,10 +80,11 @@ class RegistrationsController extends Controller
     }
 
     private function calculateRentAmountForPeriod(
-        int $oneDayRentAmount,
+        int    $oneDayRentAmount,
         string $rentStartDate,
         string $rentEndDate
-    ): int {
+    ): int
+    {
         $days = Carbon::createFromTimeString($rentEndDate)->diff(Carbon::createFromTimeString($rentStartDate))->days;
         return $oneDayRentAmount * $days;
     }
@@ -110,7 +110,7 @@ class RegistrationsController extends Controller
         ]);
     }
 
-    private function createAction(int $registrationId, array $data): Action
+    private function createActionForRegistration(int $registrationId, array $data): Action
     {
         return Action::create([
             'registration_id' => $registrationId,
@@ -122,5 +122,14 @@ class RegistrationsController extends Controller
             'shop_id' => Auth::user()->shop_id,
             'employee_id' => Auth::user()->id
         ]);
+    }
+
+    /**
+     * @param $rent_tools_ids
+     * @return void
+     */
+    function giveToolsFromWarehouseToRent($rent_tools_ids): void
+    {
+        Tool::whereIn('id', $rent_tools_ids)->update(['status_id' => self::TOOL_IN_RENT]);
     }
 }
