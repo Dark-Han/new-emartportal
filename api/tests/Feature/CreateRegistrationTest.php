@@ -47,13 +47,14 @@ class CreateRegistrationTest extends TestCase
             'rent_start_date' => '2024-06-01 15:14',
             'rent_end_date' => '2024-06-03 15:14',
             'paid' => 12000,
+            'duty' => 0,
             'client_type_id' => 1,
             'payment_type_id' => 1,
             'rent_tools_ids' => $rentToolsIds,
         ];
 
         $response = $this->actingAs($this->employee)->post('/api/v1/registrations', $request);
-        $response->assertOk();
+        $response->assertCreated();
 
         $this->assertRegistrationWasCreated($request, $oneDayRentAmount);
         $this->assertActionWasCreated($request);
@@ -87,7 +88,7 @@ class CreateRegistrationTest extends TestCase
             'registration_id' => 1,
             'action_type_id' => 1,
             'paid' => $request['paid'],
-            'duty' => isset($request['duty']) ?? 0,
+            'duty' => $request['duty'],
             'employee_id' => $this->employee->id,
             'shop_id' => $this->employee->shop_id
         ]);
